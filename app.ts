@@ -149,4 +149,4 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 app.use('/playlists', express.static('playlists'))
 app.use('/videos', express.static('videos'))
 
-app.listen(3000, () => console.log("Application started at port", 3000))
+app.listen(4000, () => console.log("Application started at port", 4000))

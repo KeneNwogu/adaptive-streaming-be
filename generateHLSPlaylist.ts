@@ -71,7 +71,7 @@ async function generatePlaylist(filePath: string) {
 
     // console.log(width, height, bitrate)
 
-    const baseUrl = 'http://localhost:3000/playlists/' + fileName;
+    const baseUrl = 'http://localhost:4000/playlists/' + fileName;
 
     const _720_DIRECTORY_PATH = path.join(__dirname, 'videos', fileName, '720p');
     const _360_DIRECTORY_PATH = path.join(__dirname, 'videos', fileName, '360p');
@@ -79,7 +79,7 @@ async function generatePlaylist(filePath: string) {
 
     const MASTER_PLAYLIST_HEADER = `#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=${videoInfo720.bitrate},RESOLUTION=${videoInfo720.width}x${videoInfo720.height}\n${baseUrl}_720p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=${videoInfo360.bitrate},RESOLUTION=${videoInfo360.width}x${videoInfo360.height}\n${baseUrl}_360p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=${videoInfo144.bitrate},RESOLUTION=${videoInfo144.width}x${videoInfo144.height}\n${baseUrl}_144p.m3u8`;
 
-    const videoResourceBaseUrl = 'http://localhost:3000/videos/' + fileName;
+    const videoResourceBaseUrl = 'http://localhost:4000/videos/' + fileName;
 
     let _720_FILES = await retrieveFilesInDirectory(_720_DIRECTORY_PATH)
     let _720_FILE_SEGMENTS = _720_FILES.map(file => {
