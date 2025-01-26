@@ -1,7 +1,7 @@
 import multer from 'multer';
 import express from 'express';
 import fs from 'fs/promises';
-import path, { resolve } from 'path';
+import path from 'path';
 import { spawn, exec } from "child_process"
 
 const app = express();
@@ -146,8 +146,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     res.send('File processed successfully');
 });
 
-app.get('/playlists/:name', (req, res) => {
-    // send play list files
-})
+app.use('/playlists', express.static('playlists'))
+app.use('/videos', express.static('videos'))
 
 app.listen(3000, () => console.log("Application started at port", 3000))

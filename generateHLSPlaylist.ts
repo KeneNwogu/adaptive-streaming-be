@@ -79,13 +79,13 @@ async function generatePlaylist(filePath: string) {
 
     const MASTER_PLAYLIST_HEADER = `#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=${videoInfo720.bitrate},RESOLUTION=${videoInfo720.width}x${videoInfo720.height}\n${baseUrl}_720p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=${videoInfo360.bitrate},RESOLUTION=${videoInfo360.width}x${videoInfo360.height}\n${baseUrl}_360p.m3u8\n#EXT-X-STREAM-INF:BANDWIDTH=${videoInfo144.bitrate},RESOLUTION=${videoInfo144.width}x${videoInfo144.height}\n${baseUrl}_144p.m3u8`;
 
-    const videoResourceBaseUrl = 'http://localhost:3000/videos/segments/' + fileName;
+    const videoResourceBaseUrl = 'http://localhost:3000/videos/' + fileName;
 
     let _720_FILES = await retrieveFilesInDirectory(_720_DIRECTORY_PATH)
     let _720_FILE_SEGMENTS = _720_FILES.map(file => {
         let fileName = path.parse(file).name
         let fileExtension = path.parse(filePath).ext
-        return `#EXTINF:8.0,\n${videoResourceBaseUrl}/${fileName}${fileExtension}`
+        return `#EXTINF:8.0,\n${videoResourceBaseUrl}/720p/${fileName}${fileExtension}`
     })
     .reduce((prev, curr) => prev + "\n" + curr)
 
@@ -94,7 +94,7 @@ async function generatePlaylist(filePath: string) {
     let _360_FILE_SEGMENTS = _360_FILES.map(file => {
         let fileName = path.parse(file).name;
         let fileExtension = path.parse(filePath).ext
-        return `#EXTINF:8.0,\n${videoResourceBaseUrl}/${fileName}${fileExtension}`;
+        return `#EXTINF:8.0,\n${videoResourceBaseUrl}/360p/${fileName}${fileExtension}`;
     }).reduce((prev, curr) => prev + "\n" + curr);
 
     const _360_SUB_PLAYLIST_BASE = `#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-TARGETDURATION:8\n#EXT-X-MEDIA-SEQUENCE:0\n${_360_FILE_SEGMENTS}\n#EXT-X-ENDLIST`;
@@ -103,7 +103,7 @@ async function generatePlaylist(filePath: string) {
     let _144_FILE_SEGMENTS = _144_FILES.map(file => {
         let fileName = path.parse(file).name;
         let fileExtension = path.parse(filePath).ext
-        return `#EXTINF:8.0,\n${videoResourceBaseUrl}/${fileName}${fileExtension}`;
+        return `#EXTINF:8.0,\n${videoResourceBaseUrl}/144p/${fileName}${fileExtension}`;
     }).reduce((prev, curr) => prev + "\n" + curr);
 
     const _144_SUB_PLAYLIST_BASE = `#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-TARGETDURATION:8\n#EXT-X-MEDIA-SEQUENCE:0\n${_144_FILE_SEGMENTS}\n#EXT-X-ENDLIST`;
